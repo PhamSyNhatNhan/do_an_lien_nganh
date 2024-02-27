@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6958389669804163689}
   - component: {fileID: 8910960741353581560}
   - component: {fileID: 1330905402102822085}
+  - component: {fileID: 742805236272451462}
   m_Layer: 0
   m_Name: SwordMaster_Atk3
   m_TagString: Untagged
@@ -31,7 +32,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5374526709061184698}
+  - {fileID: 5007862691384828348}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6958389669804163689
@@ -75,7 +78,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -468779589
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 9002722671724274806, guid: 23ebf5386ab9443448d99a21c75126b9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -122,3 +125,88 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 530876240e2d49741be8deee6bb113a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &742805236272451462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291569149379888262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02116f7c162031c40aff23a480cd3716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberAttack: 2
+  WhatIsDamgeEnable:
+    serializedVersion: 2
+    m_Bits: 128
+  attackHitBoxes:
+  - {fileID: 5374526709061184698}
+  - {fileID: 5007862691384828348}
+  attackRadiuses:
+  - 0.31
+  - 0.3
+  timeAttack: 9600000096000000
+--- !u!1 &2003061624103908752
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5374526709061184698}
+  m_Layer: 0
+  m_Name: hitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5374526709061184698
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003061624103908752}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7499010384474586500}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8694896507069825662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5007862691384828348}
+  m_Layer: 0
+  m_Name: hitbox_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5007862691384828348
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8694896507069825662}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.053, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7499010384474586500}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

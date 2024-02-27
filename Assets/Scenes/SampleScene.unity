@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 11724048}
   - component: {fileID: 11724049}
   - component: {fileID: 11724050}
+  - component: {fileID: 11724051}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -291,9 +292,8 @@ MonoBehaviour:
   SkillUi: {fileID: 0}
   BurstUi: {fileID: 0}
   DashUi: {fileID: 0}
-  attackBase: 0
-  attackPhyBonus: 0
-  attackMaBonus: 0
+  attackBase: 100
+  attackBonus: 0
   dmgBonus: 0
   defPierceBase: 0
   defPierceBonus: 0
@@ -303,7 +303,7 @@ MonoBehaviour:
   defBonus: 0
   dmgResistanceBase: 0
   dmgResistanceBonus: 0
-  movementSpeed: 8
+  movementSpeed: 6
   dashSpeed: 20
   dashTime: 0.15
   dashLeft: 0
@@ -328,9 +328,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b7671a517a87a94cbb5c0e01796f835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  atk_1: {fileID: 5630990344254624895, guid: a9f412801ce56524d81e507d53c9a4c1, type: 3}
-  atk_2: {fileID: 6105806867411046019, guid: 1f9f0ffa149f8974cae3815d333678f4, type: 3}
-  atk_3: {fileID: 1291569149379888262, guid: 1c7394a3cd136a64fb5470d561c303cf, type: 3}
+  atk_1: {fileID: 7902119525744846681, guid: 9569464e6e1f8b64c9a82b0d4042b13d, type: 3}
+  atk_2: {fileID: 6105806867411046019, guid: 12d42ad37d4cace4b8c266aca0068457, type: 3}
+  atk_3: {fileID: 1291569149379888262, guid: 51cd5f87d5291904e9cdeeb3e6cb6ee9, type: 3}
   sub_atk_1: {fileID: 3733603990780142527, guid: 70ce4669ed942924fb41b3ee2b49ad97, type: 3}
   sub_atk_2: {fileID: 2607689692814481149, guid: 3b8073732c902314592b18c5dadc57b2, type: 3}
   attackTransform: {fileID: 29752340}
@@ -378,6 +378,24 @@ CapsuleCollider2D:
   m_Offset: {x: 0.040188253, y: -0.039429903}
   m_Size: {x: 0.11043322, y: 0.26114023}
   m_Direction: 0
+--- !u!114 &11724051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11724042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20e875cb73b445243848839a78c1fa95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curAttack: 0
+  curDamgBonus: 0
+  curDefPierce: 0
+  curHp: 0
+  curDef: 0
+  curDmgResistance: 0
 --- !u!1 &29752340
 GameObject:
   m_ObjectHideFlags: 0
@@ -1301,6 +1319,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 780139142}
+  - component: {fileID: 780139143}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1323,6 +1342,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &780139143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780139141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db4df3801708330479fb281b7e1967eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &825983563
 GameObject:
   m_ObjectHideFlags: 0
@@ -3270,6 +3301,9 @@ GameObject:
   - component: {fileID: 1711449414}
   - component: {fileID: 1711449413}
   - component: {fileID: 1711449416}
+  - component: {fileID: 1711449419}
+  - component: {fileID: 1711449418}
+  - component: {fileID: 1711449417}
   m_Layer: 7
   m_Name: Dummy
   m_TagString: Enemy
@@ -3367,7 +3401,7 @@ Transform:
   m_GameObject: {fileID: 1711449412}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.659, y: 0.701, z: 0}
+  m_LocalPosition: {x: 4.69, y: 0.69, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3410,6 +3444,60 @@ CapsuleCollider2D:
   m_Offset: {x: 0.051136255, y: -0.05375868}
   m_Size: {x: 0.18332195, y: 0.2924826}
   m_Direction: 0
+--- !u!114 &1711449417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711449412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ebdc5c72564e143b24fced94c0975e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curAttack: 0
+  curDamgBonus: 0
+  curDefPierce: 0
+  curHp: 0
+  curDef: 0
+  curDmgResistance: 0
+--- !u!114 &1711449418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711449412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 335e6155dfe8b7b4aa0c0d8d18c466f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackBase: 0
+  attackBonus: 0
+  dmgBonus: 0
+  defPierceBase: 0
+  defPierceBonus: 0
+  hpBase: 1000000
+  hpBonus: 0
+  defBase: 0
+  defBonus: 0
+  dmgResistanceBase: 0
+  dmgResistanceBonus: 0
+  knockbackSpeed: {x: 1, y: 1}
+--- !u!114 &1711449419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711449412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e20f06241344f24685a6ff5400457b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1739514978
 GameObject:
   m_ObjectHideFlags: 0

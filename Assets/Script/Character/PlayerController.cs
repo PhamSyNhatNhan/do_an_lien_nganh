@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [Header("Dash")] 
     private bool isDash = false;
     private bool canDash = true;
+    private Coroutine flipCoroutine;
     
     private void Awake()
     {
@@ -129,6 +130,25 @@ public class PlayerController : MonoBehaviour
     public void subFlipping()
     {
         Flipping();
+    }
+    public void subFlipping(float time)
+    {
+        Flipping();
+        canFlip = false;
+        
+        if (flipCoroutine != null)
+        {
+            StopCoroutine(flipCoroutine);
+        }
+        
+        flipCoroutine = StartCoroutine(flipReset(time));
+    }
+
+    IEnumerator flipReset(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        canFlip = true;
     }
 
     private void AnimationControl()

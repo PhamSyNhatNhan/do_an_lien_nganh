@@ -9,6 +9,7 @@ public class PlayerCombat : MonoBehaviour
     private Controller controller;
     private PlayerController pc;
     private PlayerStat ps;
+    private PlayerHealth ph;
 
     [Header("Dash")] 
     private bool isDash = false;
@@ -35,7 +36,8 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private LayerMask DamgeEnable;
     [SerializeField] private float attackRadiusSnap;
     [SerializeField] private Vector3 offsetAttack;
-    
+
+    private DamageParameters parameters;
     
 
     [Header("Skill")]
@@ -50,9 +52,11 @@ public class PlayerCombat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        parameters = new DamageParameters();
         pc = GetComponent<PlayerController>();
         controller = pc.Controller;
         ps = GetComponent<PlayerStat>();
+        ph = GetComponent<PlayerHealth>();
         
         statAwake();
         StartCoroutine(statDashUpdate());
@@ -209,14 +213,14 @@ public class PlayerCombat : MonoBehaviour
                 {
                     if (pc.FlipDirect != 1)
                     {
-                        pc.subFlipping();
+                        pc.subFlipping(0.2f);
                     }
                 }
                 else if(transform.position.x > Enemy[0].transform.position.x)
                 {
                     if (pc.FlipDirect != -1)
                     {
-                        pc.subFlipping();
+                        pc.subFlipping(0.2f);
                     }
                 }
                 
@@ -227,6 +231,8 @@ public class PlayerCombat : MonoBehaviour
                 
                 Vector3 attackPositionTmp = attackTransform.transform.position + (rotation * offsetAttack); 
 
+                parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+                
                 GameObject atkInstance = Instantiate(atk_1, attackPositionTmp, rotation);
                 GameObject subAtkInstance = Instantiate(sub_atk_1, attackPositionTmp, rotation);
 
@@ -238,6 +244,7 @@ public class PlayerCombat : MonoBehaviour
             else
             {
                 Vector3 attackPositionTmp = attackTransform.transform.position + (attackTransform.transform.rotation * offsetAttack); 
+                parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
                 
                 GameObject atkInstance = Instantiate(atk_1, attackPositionTmp, attackTransform.transform.rotation);
                 GameObject subAtkInstance = Instantiate(sub_atk_1, attackPositionTmp, attackTransform.transform.rotation);
@@ -275,14 +282,14 @@ public class PlayerCombat : MonoBehaviour
                 {
                     if (pc.FlipDirect != 1)
                     {
-                        pc.subFlipping();
+                        pc.subFlipping(0.2f);
                     }
                 }
                 else if(transform.position.x > Enemy[0].transform.position.x)
                 {
                     if (pc.FlipDirect != -1)
                     {
-                        pc.subFlipping();
+                        pc.subFlipping(0.2f);
                     }
                 }
                 
@@ -291,7 +298,8 @@ public class PlayerCombat : MonoBehaviour
                 Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 
                 Vector3 attackPositionTmp = attackTransform.transform.position + (rotation * offsetAttack); 
-                
+                parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+
                 GameObject atkInstance = Instantiate(atk_2, attackPositionTmp, rotation);
                 GameObject subAtkInstance = Instantiate(sub_atk_1, attackPositionTmp, rotation);
 
@@ -302,7 +310,8 @@ public class PlayerCombat : MonoBehaviour
             else
             {
                 Vector3 attackPositionTmp = attackTransform.transform.position + (attackTransform.transform.rotation * offsetAttack); 
-                
+                parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce,pc.Rb.transform.position, 0.0f, 0.0f);
+
                 GameObject atkInstance = Instantiate(atk_2, attackPositionTmp, attackTransform.transform.rotation);
                 GameObject subAtkInstance = Instantiate(sub_atk_1, attackPositionTmp, attackTransform.transform.rotation);
 
@@ -339,14 +348,14 @@ public class PlayerCombat : MonoBehaviour
                 {
                     if (pc.FlipDirect != 1)
                     {
-                        pc.subFlipping();
+                        pc.subFlipping(0.4f);
                     }
                 }
                 else if(transform.position.x > Enemy[0].transform.position.x)
                 {
                     if (pc.FlipDirect != -1)
                     {
-                        pc.subFlipping();
+                        pc.subFlipping(0.4f);
                     }
                 }
                 
@@ -355,7 +364,8 @@ public class PlayerCombat : MonoBehaviour
                 Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 
                 Vector3 attackPositionTmp = attackTransform.transform.position + (rotation * offsetAttack); 
-                
+                parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+
                 GameObject atkInstance = Instantiate(atk_3, attackPositionTmp, rotation);
                 GameObject subAtkInstance = Instantiate(sub_atk_2, attackPositionTmp, rotation);
 
@@ -381,7 +391,8 @@ public class PlayerCombat : MonoBehaviour
                 Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 
                 Vector3 attackPositionTmp = attackTransform.transform.position + (rotation * offsetAttack); 
-                
+                parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+
                 GameObject atkInstance = Instantiate(atk_3, attackPositionTmp, rotation);
                 GameObject subAtkInstance = Instantiate(sub_atk_2, attackPositionTmp, rotation);
                 
@@ -452,5 +463,11 @@ public class PlayerCombat : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(attackTransform.transform.position, attackRadiusSnap);
+    }
+
+    public DamageParameters Parameters
+    {
+        get => parameters;
+        set => parameters = value;
     }
 }

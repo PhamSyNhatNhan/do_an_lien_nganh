@@ -15,8 +15,7 @@ public class PlayerStat : MonoBehaviour
     
     [Header("Stat")]
     [SerializeField] private float attackBase = 0.0f;
-    [SerializeField] private float attackPhyBonus = 0.0f; //%
-    [SerializeField] private float attackMaBonus = 0.0f; //%
+    [SerializeField] private float attackBonus = 0.0f; //%
     [SerializeField] private float dmgBonus = 0.0f;
     [SerializeField] private float defPierceBase = 0.0f;
     [SerializeField] private float defPierceBonus = 0.0f; //%
@@ -79,18 +78,6 @@ public class PlayerStat : MonoBehaviour
     {
         get => attackBase;
         set => attackBase = value;
-    }
-
-    public float AttackPhyBonus
-    {
-        get => attackPhyBonus;
-        set => attackPhyBonus = value;
-    }
-
-    public float AttackMaBonus
-    {
-        get => attackMaBonus;
-        set => attackMaBonus = value;
     }
 
     public float DmgBonus
@@ -223,5 +210,11 @@ public class PlayerStat : MonoBehaviour
     {
         get => attackMultiple;
         set => attackMultiple = value;
+    }
+
+    public float AttackBonus
+    {
+        get => attackBonus;
+        set => attackBonus = value;
     }
 }

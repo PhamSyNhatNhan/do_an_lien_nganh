@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3559539129712659523}
   - component: {fileID: 6370236292079941941}
   - component: {fileID: 2157618455243649828}
+  - component: {fileID: 7549812116495204561}
   m_Layer: 0
   m_Name: SwordMaster_Atk2
   m_TagString: Untagged
@@ -31,7 +32,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6027850336857104092}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3559539129712659523
@@ -75,7 +77,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -468779589
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: -2574488906446548140, guid: cb86065e0955eab4ba58087381ca1a3e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -122,3 +124,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 530876240e2d49741be8deee6bb113a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7549812116495204561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6105806867411046019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3ffd4d2e9ad70d4c84b45b6142e9ff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WhatIsDamgeEnable:
+    serializedVersion: 2
+    m_Bits: 128
+  AttackHitBox: {fileID: 6027850336857104092}
+  AtackRadius: 0.24
+--- !u!1 &6338374167069183096
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6027850336857104092}
+  m_Layer: 0
+  m_Name: hitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6027850336857104092
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338374167069183096}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.056, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4699208204932354121}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
