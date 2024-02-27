@@ -23,6 +23,9 @@ public class DummyHealth : MonoBehaviour
     private float KnockbackStartTime;
     private bool isKnockback = false;
     private float knockBackTime = 0.0f;
+
+    [Header("Dmg")] 
+    [SerializeField] private GameObject strikeEffect;
     
 
     private DummyStat ds;
@@ -94,6 +97,8 @@ public class DummyHealth : MonoBehaviour
         float KnockBackTime = parameters.KnockBackTime1;
         
         curHp -= dma.finalDamage(baseDmg, dmgBonus, defPierce, curDef, curDmgResistance);
+        Instantiate(strikeEffect, transform);
+        
         if (playerDirect.x <= transform.position.x && dmy.DummyDirect == 1)
         {
             dmy.Flipping();

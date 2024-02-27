@@ -303,7 +303,7 @@ MonoBehaviour:
   defBonus: 0
   dmgResistanceBase: 0
   dmgResistanceBonus: 0
-  movementSpeed: 6
+  movementSpeed: 5
   dashSpeed: 20
   dashTime: 0.15
   dashLeft: 0
@@ -3462,6 +3462,7 @@ MonoBehaviour:
   curHp: 0
   curDef: 0
   curDmgResistance: 0
+  strikeEffect: {fileID: 4156266718535218408, guid: fec8c005f022e48439bdfe1292042042, type: 3}
 --- !u!114 &1711449418
 MonoBehaviour:
   m_ObjectHideFlags: 0
