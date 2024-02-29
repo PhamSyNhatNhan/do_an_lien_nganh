@@ -47,17 +47,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\Enemy\Dummy\DummyHealth.cs" />
-    <Compile Include="Assets\Script\Character\PlayerCombat.cs" />
+    <Compile Include="Assets\Script\Character\Default\CircleHitboxDefault_2.cs" />
     <Compile Include="Assets\Script\Projectile\Projectile.cs" />
-    <Compile Include="Assets\Script\Character\PlayerHealth.cs" />
     <Compile Include="Assets\Script\GameManager\DamageParameters.cs" />
-    <Compile Include="Assets\Script\Character\CircleHitboxDefault_2.cs" />
-    <Compile Include="Assets\Script\Character\PlayerController.cs" />
-    <Compile Include="Assets\Script\Character\CircleHitboxDefault.cs" />
-    <Compile Include="Assets\Script\Character\PlayerStat.cs" />
+    <Compile Include="Assets\Script\Character\Default\PlayerController.cs" />
+    <Compile Include="Assets\Script\Character\SwordMaster\PlayerCombat.cs" />
+    <Compile Include="Assets\Script\Character\Default\PlayerStat.cs" />
     <Compile Include="Assets\input\Controller.cs" />
     <Compile Include="Assets\Script\Enemy\Dummy\Dummy.cs" />
+    <Compile Include="Assets\Script\Character\Default\PlayerHealth.cs" />
     <Compile Include="Assets\Script\GameManager\DamageManager.cs" />
+    <Compile Include="Assets\Script\Character\Default\CircleHitboxDefault.cs" />
     <Compile Include="Assets\Script\Enemy\Dummy\DummyStat.cs" />
     <Compile Include="Assets\Script\Projectile\DestroyAnimationCustom.cs" />
     <Compile Include="Assets\Script\Projectile\DestroyAnimation.cs" />
