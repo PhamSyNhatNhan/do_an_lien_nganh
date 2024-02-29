@@ -11,7 +11,10 @@ public class DamageParameters
     private float knockBack;
     private float KnockBackTime;
 
-    public DamageParameters(float baseDmg, float dmgBonus, float defPierce, Vector2 playerDirect, float knockBack, float knockBackTime)
+    private string dmgName;
+    private float cdDamage;
+
+    public DamageParameters(float baseDmg, float dmgBonus, float defPierce, Vector2 playerDirect, float knockBack, float knockBackTime, string dmgName, float cdDamage)
     {
         this.baseDmg = baseDmg;
         this.dmgBonus = dmgBonus;
@@ -19,12 +22,26 @@ public class DamageParameters
         this.playerDirect = playerDirect;
         this.knockBack = knockBack;
         KnockBackTime = knockBackTime;
+        this.dmgName = dmgName;
+        this.cdDamage = cdDamage;
     }
 
     public DamageParameters()
     {
     }
 
+    public void setStat(float baseDmg, float dmgBonus, float defPierce, Vector2 playerDirect, float knockBack, float knockBackTime, string dmgName, float cdDamage)
+    {
+        this.baseDmg = baseDmg;
+        this.dmgBonus = dmgBonus;
+        this.defPierce = defPierce;
+        this.playerDirect = playerDirect;
+        this.knockBack = knockBack;
+        KnockBackTime = knockBackTime;
+        this.dmgName = dmgName;
+        this.cdDamage = cdDamage;
+    }
+    
     public void setStat(float baseDmg, float dmgBonus, float defPierce, Vector2 playerDirect, float knockBack, float knockBackTime)
     {
         this.baseDmg = baseDmg;
@@ -33,6 +50,8 @@ public class DamageParameters
         this.playerDirect = playerDirect;
         this.knockBack = knockBack;
         KnockBackTime = knockBackTime;
+        this.dmgName = "";
+        this.cdDamage = 0.0f;
     }
 
     public override string ToString()
@@ -75,5 +94,16 @@ public class DamageParameters
         get => defPierce;
         set => defPierce = value;
     }
-    
+
+    public string DmgName
+    {
+        get => dmgName;
+        set => dmgName = value;
+    }
+
+    public float CdDamage
+    {
+        get => cdDamage;
+        set => cdDamage = value;
+    }
 }

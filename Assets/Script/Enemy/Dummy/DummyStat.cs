@@ -11,6 +11,9 @@ public class DummyStat : MonoBehaviour
     [SerializeField] private float dmgBonus = 0.0f;
     [SerializeField] private float defPierceBase = 0.0f;
     [SerializeField] private float defPierceBonus = 0.0f; //%
+
+    [SerializeField] private float critRate;
+    [SerializeField] private float critDamage;
     
     [SerializeField] private float hpBase = 0.0f;
     [SerializeField] private float hpBonus = 0.0f; //%
@@ -147,5 +150,17 @@ public class DummyStat : MonoBehaviour
     {
         get => knockbackSpeed;
         set => knockbackSpeed = value;
+    }
+
+    public float CritRate
+    {
+        get => critRate;
+        set => critRate = value;
+    }
+
+    public float CritDamage
+    {
+        get => critDamage;
+        set => critDamage = value;
     }
 }

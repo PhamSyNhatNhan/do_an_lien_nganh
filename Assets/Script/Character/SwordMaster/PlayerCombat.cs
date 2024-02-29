@@ -19,7 +19,8 @@ public class PlayerCombat : MonoBehaviour
     private float dashTime = 0.0f;
     private bool inputDash = true;
 
-    [Header("Attack")]
+    [Header("Attack")] 
+    private Coroutine attackReset;
     private bool isAttack = false;
     private bool canAttack = true;
     private int numberAttack;
@@ -36,8 +37,6 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private LayerMask DamgeEnable;
     [SerializeField] private float attackRadiusSnap;
     [SerializeField] private Vector3 offsetAttack;
-
-    private DamageParameters parameters;
     
 
     [Header("Skill")]
@@ -52,7 +51,6 @@ public class PlayerCombat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        parameters = new DamageParameters();
         pc = GetComponent<PlayerController>();
         controller = pc.Controller;
         ps = GetComponent<PlayerStat>();
@@ -101,6 +99,8 @@ public class PlayerCombat : MonoBehaviour
             dashTime = ps.DashTime;
             ps.DashLeft -= 1;
             checkDash = true;
+            currentAttack = 3;
+            SubAttackReset();
         }
 
         if (!isDash && !isAttack && canAttack && floatToBool(controller.Player.Attack.ReadValue<float>()))
@@ -204,7 +204,8 @@ public class PlayerCombat : MonoBehaviour
 
             Enemy.Sort((a, b) => Vector2.Distance(transform.position, a.transform.position).CompareTo(Vector2.Distance(transform.position, b.transform.position)));
             //Debug.Log("Enemy find: " + Enemy.Count);
-            
+            SubAttackReset();
+                
             if (Enemy.Count > 0)
             { 
                 GameObject nearestEnemy = Enemy[0];
@@ -231,7 +232,7 @@ public class PlayerCombat : MonoBehaviour
                 
                 Vector3 attackPositionTmp = attackTransform.transform.position + (rotation * offsetAttack); 
 
-                parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+                ph.Parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
                 
                 GameObject atkInstance = Instantiate(atk_1, attackPositionTmp, rotation);
                 GameObject subAtkInstance = Instantiate(sub_atk_1, attackPositionTmp, rotation);
@@ -244,7 +245,7 @@ public class PlayerCombat : MonoBehaviour
             else
             {
                 Vector3 attackPositionTmp = attackTransform.transform.position + (attackTransform.transform.rotation * offsetAttack); 
-                parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+                ph.Parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
                 
                 GameObject atkInstance = Instantiate(atk_1, attackPositionTmp, attackTransform.transform.rotation);
                 GameObject subAtkInstance = Instantiate(sub_atk_1, attackPositionTmp, attackTransform.transform.rotation);
@@ -273,6 +274,8 @@ public class PlayerCombat : MonoBehaviour
 
             Enemy.Sort((a, b) => Vector2.Distance(transform.position, a.transform.position).CompareTo(Vector2.Distance(transform.position, b.transform.position)));
             //Debug.Log("Enemy find: " + Enemy.Count);
+
+            SubAttackReset();
             
             if (Enemy.Count > 0)
             { 
@@ -298,7 +301,7 @@ public class PlayerCombat : MonoBehaviour
                 Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 
                 Vector3 attackPositionTmp = attackTransform.transform.position + (rotation * offsetAttack); 
-                parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+                ph.Parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
 
                 GameObject atkInstance = Instantiate(atk_2, attackPositionTmp, rotation);
                 GameObject subAtkInstance = Instantiate(sub_atk_1, attackPositionTmp, rotation);
@@ -310,7 +313,7 @@ public class PlayerCombat : MonoBehaviour
             else
             {
                 Vector3 attackPositionTmp = attackTransform.transform.position + (attackTransform.transform.rotation * offsetAttack); 
-                parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce,pc.Rb.transform.position, 0.0f, 0.0f);
+                ph.Parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce,pc.Rb.transform.position, 0.0f, 0.0f);
 
                 GameObject atkInstance = Instantiate(atk_2, attackPositionTmp, attackTransform.transform.rotation);
                 GameObject subAtkInstance = Instantiate(sub_atk_1, attackPositionTmp, attackTransform.transform.rotation);
@@ -364,7 +367,7 @@ public class PlayerCombat : MonoBehaviour
                 Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 
                 Vector3 attackPositionTmp = attackTransform.transform.position + (rotation * offsetAttack); 
-                parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+                ph.Parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
 
                 GameObject atkInstance = Instantiate(atk_3, attackPositionTmp, rotation);
                 GameObject subAtkInstance = Instantiate(sub_atk_2, attackPositionTmp, rotation);
@@ -391,7 +394,7 @@ public class PlayerCombat : MonoBehaviour
                 Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 
                 Vector3 attackPositionTmp = attackTransform.transform.position + (rotation * offsetAttack); 
-                parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+                ph.Parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
 
                 GameObject atkInstance = Instantiate(atk_3, attackPositionTmp, rotation);
                 GameObject subAtkInstance = Instantiate(sub_atk_2, attackPositionTmp, rotation);
@@ -408,6 +411,7 @@ public class PlayerCombat : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         
+        ph.Parameters.setStat(ph.CurAttack * 2, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 1.0f, 0.2f, "SM_SlashAttack", 0.2f);
         GameObject instance = (GameObject)Instantiate(slashAttack, vec, rotation);
     }
     
@@ -423,6 +427,24 @@ public class PlayerCombat : MonoBehaviour
 
         isAttack = false;
         canAttack = true;
+    }
+    
+    public void SubAttackReset()
+    {
+        if (attackReset != null)
+        {
+            StopCoroutine(attackReset);
+        }
+        
+        attackReset = StartCoroutine(attackReset_(3));
+    }
+
+    IEnumerator attackReset_(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        //Debug.Log("ResetAttack");
+        currentAttack = 1;
     }
     
     // SKILL
@@ -464,10 +486,5 @@ public class PlayerCombat : MonoBehaviour
     {
         Gizmos.DrawWireSphere(attackTransform.transform.position, attackRadiusSnap);
     }
-
-    public DamageParameters Parameters
-    {
-        get => parameters;
-        set => parameters = value;
-    }
+    
 }

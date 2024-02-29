@@ -23,6 +23,9 @@ public class PlayerHealth : MonoBehaviour
     private bool isKnockback = false;
     private float knockBackTime = 0.0f;
     
+    [Header("Attack")]
+    private DamageParameters parameters;
+    
 
     private PlayerStat ps;
     private PlayerController pc;
@@ -31,6 +34,7 @@ public class PlayerHealth : MonoBehaviour
     {
         ps = GetComponent<PlayerStat>();
         pc = GetComponent<PlayerController>();
+        parameters = new DamageParameters();
         getStats();
     }
 
@@ -170,5 +174,11 @@ public class PlayerHealth : MonoBehaviour
     {
         get => knockBackTime;
         set => knockBackTime = value;
+    }
+
+    public DamageParameters Parameters
+    {
+        get => parameters;
+        set => parameters = value;
     }
 }

@@ -20,13 +20,13 @@ public class DummyHealth : MonoBehaviour
     [SerializeField] private float curDmgResistance = 0.0f;
 
     [Header("KnockBack")]
-    private float KnockbackStartTime;
     private bool isKnockback = false;
     private float knockBackTime = 0.0f;
 
     [Header("Dmg")] 
     [SerializeField] private GameObject strikeEffect;
-    
+    Dictionary<string, float> dmgCD = new Dictionary<string, float>();
+
 
     private DummyStat ds;
     private Dummy dmy;
@@ -95,34 +95,53 @@ public class DummyHealth : MonoBehaviour
         Vector2 playerDirect = parameters.PlayerDirect;
         float knockBack = parameters.KnockBack;
         float KnockBackTime = parameters.KnockBackTime1;
-        
-        curHp -= dma.finalDamage(baseDmg, dmgBonus, defPierce, curDef, curDmgResistance);
-        Instantiate(strikeEffect, transform);
-        
-        if (playerDirect.x <= transform.position.x && dmy.DummyDirect == 1)
-        {
-            dmy.Flipping();
-        }
 
-        if (playerDirect.x >= transform.position.x && dmy.DummyDirect == -1)
+
+        if (!dmgCD.ContainsKey(parameters.DmgName))
         {
-            dmy.Flipping();
+            curHp -= dma.finalDamage(baseDmg, dmgBonus, defPierce, curDef, curDmgResistance);
+            Instantiate(strikeEffect, transform);
+
+            if (parameters.CdDamage != 0.0f)
+            {
+                dmgCD.Add(parameters.DmgName, parameters.CdDamage);
+                StartCoroutine(removeCdDamage(parameters.DmgName, parameters.CdDamage));
+            }
+            
+            if (playerDirect.x <= transform.position.x && dmy.DummyDirect == 1)
+            {
+                dmy.Flipping();
+            }
+
+            if (playerDirect.x >= transform.position.x && dmy.DummyDirect == -1)
+            {
+                dmy.Flipping();
+            }
+        
+            if(curHp <= 0) Destroy(gameObject);
+        
+            KnockBack(playerDirect, knockBack, KnockBackTime);
         }
-        
-        if(curHp <= 0) Destroy(gameObject);
-        
-        KnockBack(knockBack, KnockBackTime);
     }
 
-    private void KnockBack(float knockBack, float KnockBackTime)
+    IEnumerator removeCdDamage(string name, float time)
+    {
+        yield return new WaitForSeconds(time);
+        
+        dmgCD.Remove(name);
+    }
+
+    private void KnockBack(Vector2 playerDirect, float knockBack, float KnockBackTime)
     {
         if(knockBack == 0.0f) return;
         
-        KnockbackStartTime = Time.time;
         isKnockback = true;
         knockBackTime = KnockBackTime;
         dmy.CanFlip = false;
-        dmy.Rb.velocity = new Vector2(ds.KnockbackSpeed.x * knockBack * dmy.DummyDirect, 0.0f);
+        
+        Vector2 knockbackDirection = ((Vector2)transform.position - playerDirect).normalized;
+        
+        dmy.Rb.velocity = new Vector2(knockbackDirection.x * knockBack, knockbackDirection.y * knockBack);
     }
 
     private void checkKnockBack()
@@ -135,7 +154,6 @@ public class DummyHealth : MonoBehaviour
                 isKnockback = false;
                 dmy.CanFlip = true;
                 dmy.Rb.velocity = Vector2.zero;
-
             }
         }
     }

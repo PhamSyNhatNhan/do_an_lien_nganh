@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CircleHitbox : MonoBehaviour
+public class CircleHitboxDefault_3 : MonoBehaviour
 {
     [SerializeField] private LayerMask WhatIsDamgeEnable;
     [SerializeField] private Transform AttackHitBox; 
@@ -13,9 +14,13 @@ public class CircleHitbox : MonoBehaviour
     void Start()
     {
         ph = GameObject.Find("Player").GetComponent<PlayerHealth>();
+    }
+
+    void Update()
+    {
         Dmg();
     }
-    
+
 
     private void Dmg()
     {

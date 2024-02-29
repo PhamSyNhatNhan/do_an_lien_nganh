@@ -20,6 +20,8 @@ public class PlayerStat : MonoBehaviour
     [SerializeField] private float defPierceBase = 0.0f;
     [SerializeField] private float defPierceBonus = 0.0f; //%
     
+    [SerializeField] private float critRate;
+    [SerializeField] private float critDamage;
     
     [SerializeField] private float hpBase = 0.0f;
     [SerializeField] private float hpBonus = 0.0f; //%
@@ -216,5 +218,17 @@ public class PlayerStat : MonoBehaviour
     {
         get => attackBonus;
         set => attackBonus = value;
+    }
+
+    public float CritRate
+    {
+        get => critRate;
+        set => critRate = value;
+    }
+
+    public float CritDamage
+    {
+        get => critDamage;
+        set => critDamage = value;
     }
 }

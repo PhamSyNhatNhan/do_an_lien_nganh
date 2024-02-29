@@ -297,6 +297,8 @@ MonoBehaviour:
   dmgBonus: 0
   defPierceBase: 0
   defPierceBonus: 0
+  critRate: 0
+  critDamage: 0
   hpBase: 0
   hpBonus: 0
   defBase: 0
@@ -3480,6 +3482,8 @@ MonoBehaviour:
   dmgBonus: 0
   defPierceBase: 0
   defPierceBonus: 0
+  critRate: 0
+  critDamage: 0
   hpBase: 1000000
   hpBonus: 0
   defBase: 0

@@ -147,7 +147,9 @@ MonoBehaviour:
   attackRadiuses:
   - 0.31
   - 0.3
-  timeAttack: 9600000096000000
+  timeAttack:
+  - 0.15
+  - 0.15
 --- !u!1 &2003061624103908752
 GameObject:
   m_ObjectHideFlags: 0

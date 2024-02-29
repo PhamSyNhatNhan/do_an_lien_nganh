@@ -52,6 +52,7 @@
     <Compile Include="Assets\Script\GameManager\DamageParameters.cs" />
     <Compile Include="Assets\Script\Character\Default\PlayerController.cs" />
     <Compile Include="Assets\Script\Character\SwordMaster\PlayerCombat.cs" />
+    <Compile Include="Assets\Script\Character\Default\CircleHitboxDefault_3.cs" />
     <Compile Include="Assets\Script\Character\Default\PlayerStat.cs" />
     <Compile Include="Assets\input\Controller.cs" />
     <Compile Include="Assets\Script\Enemy\Dummy\Dummy.cs" />
