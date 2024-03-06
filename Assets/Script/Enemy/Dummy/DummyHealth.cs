@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DummyHealth : MonoBehaviour
@@ -117,8 +118,11 @@ public class DummyHealth : MonoBehaviour
             {
                 dmy.Flipping();
             }
-        
-            if(curHp <= 0) Destroy(gameObject);
+
+            if (curHp <= 0)
+            {
+                Destroy(gameObject);
+            }
         
             KnockBack(playerDirect, knockBack, KnockBackTime);
         }

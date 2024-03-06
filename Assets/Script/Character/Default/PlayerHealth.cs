@@ -86,6 +86,11 @@ public class PlayerHealth : MonoBehaviour
         curDmgResistance = dmgResistance;
     }
 
+    public void Damage(DamageParameters parameters)
+    {
+        Debug.Log("Damage " + parameters.BaseDmg);
+    }
+
     public float Attack
     {
         get => attack;

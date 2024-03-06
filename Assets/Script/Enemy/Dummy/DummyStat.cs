@@ -155,12 +155,20 @@ public class DummyStat : MonoBehaviour
     public float CritRate
     {
         get => critRate;
-        set => critRate = value;
+        set
+        {
+            critRate = value;
+            dh.ChangeStat();
+        }
     }
 
     public float CritDamage
     {
         get => critDamage;
-        set => critDamage = value;
+        set
+        {
+            critDamage = value;
+            dh.ChangeStat();
+        }
     }
 }

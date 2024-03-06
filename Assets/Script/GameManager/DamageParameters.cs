@@ -56,7 +56,7 @@ public class DamageParameters
 
     public override string ToString()
     {
-        return baseDmg + " " + dmgBonus + " " + defPierce + " " + playerDirect + " " + knockBack + " " + KnockBackTime;
+        return "base damge: " + baseDmg + ", damage bonus" + dmgBonus + " " + defPierce + " " + playerDirect + " " + knockBack + " " + KnockBackTime;
     }
 
     public float BaseDmg

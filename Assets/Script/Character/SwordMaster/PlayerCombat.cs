@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
+using Random = UnityEngine.Random;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class PlayerCombat : MonoBehaviour
     private PlayerController pc;
     private PlayerStat ps;
     private PlayerHealth ph;
+    private GameManager_ gm;
+
+    private bool canInput = true;
 
     [Header("Dash")] 
     private bool isDash = false;
@@ -42,11 +46,24 @@ public class PlayerCombat : MonoBehaviour
     [Header("Skill")]
     private bool isSkill = false;
     private bool canSkill = true;
+    [SerializeField] private GameObject skill1Object;
+    [SerializeField] private GameObject skill2Object;
+    [SerializeField] private float skillCd;
+    [SerializeField] private float manaGain;
+    private Coroutine skillTimer;
+    
     
     [Header("Burst")]
     private bool isBurst = false;
     private bool canBurst = true;
-    
+    private float curMana = 0;
+    [SerializeField] private float maxMana;
+    [SerializeField] private GameObject burstObject;
+    [SerializeField] private float burstCd;
+    private Coroutine burstTimer;
+    [SerializeField] private Vector2 maxOffsetMagnitude;
+    [SerializeField] private float timeDisable;
+    [SerializeField] private GameObject burstFinalObject;
     
     // Start is called before the first frame update
     void Start()
@@ -55,6 +72,7 @@ public class PlayerCombat : MonoBehaviour
         controller = pc.Controller;
         ps = GetComponent<PlayerStat>();
         ph = GetComponent<PlayerHealth>();
+        gm = GameObject.Find("GameManager").GetComponent<GameManager_>();
         
         statAwake();
         StartCoroutine(statDashUpdate());
@@ -91,6 +109,8 @@ public class PlayerCombat : MonoBehaviour
     
     private void CheckInput()
     {
+        if(canInput == false) return;
+        
         if (!isDash && pc.CanDash && ps.DashLeft > 0 && floatToBool(controller.Player.Dash.ReadValue<float>()))
         {
             pc.CanDash = false;
@@ -124,18 +144,29 @@ public class PlayerCombat : MonoBehaviour
         
         if (!isDash && !isSkill && !isAttack && canSkill && floatToBool(controller.Player.Skill.ReadValue<float>()))
         {
-            Debug.Log("Skill");
+            //Debug.Log("Skill");
+            isSkill = true;
             canSkill = false;
+            curMana += manaGain;
+            if (curMana > maxMana)
+            {
+                curMana = maxMana;
+            }
             Skill();
-            StartCoroutine(statSkillDelay());
         }
         
-        if (!isDash && !isBurst && !isAttack && canBurst && floatToBool(controller.Player.Burst.ReadValue<float>()))
+        if (curMana == maxMana && !isDash && !isBurst && !isAttack && canBurst && floatToBool(controller.Player.Burst.ReadValue<float>()))
         {
-            Debug.Log("Burst");
+            isBurst = true;
+            curMana = 0;
+            //Debug.Log("Burst");
+            pc.Rb.velocity = new Vector2(0.0f, 0.0f);
+            canInput = false;
+            pc.CanInput = false;
+            pc.Rb.simulated = false;
             canBurst = false;
+            
             Burst();
-            StartCoroutine(statBurstDelay());
         }
     }
 
@@ -379,6 +410,7 @@ public class PlayerCombat : MonoBehaviour
             }
             else
             {
+                /*
                 Vector2 playerDirection; 
                 
                 if (pc.FlipDirect == 1)
@@ -402,6 +434,22 @@ public class PlayerCombat : MonoBehaviour
                 atkInstance.transform.parent = attackTransform.transform;
                 subAtkInstance.transform.parent = attackTransform.transform;
                 
+                StartCoroutine(subSlashAttack(0.0f, attackPositionTmp, rotation));
+                */
+                
+                
+                Vector2 direction = pc.MoveSnap.normalized; 
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                
+                Vector3 attackPositionTmp = attackTransform.transform.position + (rotation * offsetAttack); 
+                ph.Parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+
+                GameObject atkInstance = Instantiate(atk_3, attackPositionTmp, rotation);
+                GameObject subAtkInstance = Instantiate(sub_atk_2, attackPositionTmp, rotation);
+
+                atkInstance.transform.parent = attackTransform.transform;
+                subAtkInstance.transform.parent = attackTransform.transform;
                 StartCoroutine(subSlashAttack(0.0f, attackPositionTmp, rotation));
             }
         }
@@ -443,14 +491,74 @@ public class PlayerCombat : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
-        //Debug.Log("ResetAttack");
+        //
+        Debug.Log("ResetAttack");
         currentAttack = 1;
     }
     
     // SKILL
     private void Skill()
     {
+        Collider2D[] DetectObject = Physics2D.OverlapCircleAll(hitboxAttack.position, attackRadiusSnap, DamgeEnable);
+
+        List<GameObject> Enemy = new List<GameObject>();
+
+        foreach (Collider2D collider in DetectObject)
+        {
+            Enemy.Add(collider.gameObject);
+        }
+
+        Enemy.Sort((a, b) => Vector2.Distance(transform.position, a.transform.position).CompareTo(Vector2.Distance(transform.position, b.transform.position)));
         
+        if (Enemy.Count > 0)
+        { 
+            GameObject nearestEnemy = Enemy[0];
+            
+            if (transform.position.x < Enemy[0].transform.position.x)
+            {
+                if (pc.FlipDirect != 1)
+                {
+                    pc.subFlipping(0.4f);
+                }
+            }
+            else if(transform.position.x > Enemy[0].transform.position.x)
+            {
+                if (pc.FlipDirect != -1)
+                {
+                    pc.subFlipping(0.4f);
+                }
+            }
+            
+            Vector3 direction = nearestEnemy.transform.position - transform.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            
+            Vector3 attackPositionTmp = attackTransform.transform.position + (rotation * offsetAttack); 
+            ph.Parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+
+            GameObject skillInstance = Instantiate(skill1Object, attackPositionTmp, rotation);
+
+            skillInstance.transform.parent = attackTransform.transform;
+            
+            StartCoroutine(subskill());
+        }
+        else
+        {
+            Vector2 direction = pc.MoveSnap.normalized; 
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            
+            Vector3 attackPositionTmp = attackTransform.transform.position + (rotation * offsetAttack); 
+            ph.Parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+
+            GameObject skillInstance = Instantiate(skill1Object, attackPositionTmp, rotation);
+
+            skillInstance.transform.parent = attackTransform.transform;
+
+            StartCoroutine(subskill());
+        }
+        
+        skillTimer = StartCoroutine(skillReset());
     }
     
     IEnumerator statSkillDelay()
@@ -459,18 +567,283 @@ public class PlayerCombat : MonoBehaviour
 
         canSkill = true;
     }
+
+    IEnumerator skillReset()
+    {
+        yield return new WaitForSeconds(skillCd);
+
+        canSkill = true;
+    }
+
+    IEnumerator subskill()
+    {
+        yield return new WaitForSeconds(0.15f);
+        
+        Collider2D[] DetectObject = Physics2D.OverlapCircleAll(hitboxAttack.position, attackRadiusSnap, DamgeEnable);
+
+        List<GameObject> Enemy = new List<GameObject>();
+
+        foreach (Collider2D collider in DetectObject)
+        {
+            Enemy.Add(collider.gameObject);
+        }
+
+        Enemy.Sort((a, b) => Vector2.Distance(transform.position, a.transform.position).CompareTo(Vector2.Distance(transform.position, b.transform.position)));
+        
+        if (Enemy.Count > 0)
+        { 
+            GameObject nearestEnemy = Enemy[0];
+            
+            if (transform.position.x < Enemy[0].transform.position.x)
+            {
+                if (pc.FlipDirect != 1)
+                {
+                    pc.subFlipping(0.4f);
+                }
+            }
+            else if(transform.position.x > Enemy[0].transform.position.x)
+            {
+                if (pc.FlipDirect != -1)
+                {
+                    pc.subFlipping(0.4f);
+                }
+            }
+            
+            Vector3 direction = nearestEnemy.transform.position - transform.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            
+            Vector3 attackPositionTmp = attackTransform.transform.position + (rotation * offsetAttack); 
+            ph.Parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+
+            GameObject skillInstance = Instantiate(skill2Object, attackPositionTmp, rotation);
+
+            skillInstance.transform.parent = attackTransform.transform;
+            
+        }
+        else
+        {
+            Vector2 direction = pc.MoveSnap.normalized; 
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            
+            Vector3 attackPositionTmp = attackTransform.transform.position + (rotation * offsetAttack); 
+            ph.Parameters.setStat(ph.CurAttack, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+
+            GameObject skillInstance = Instantiate(skill2Object, attackPositionTmp, rotation);
+
+            skillInstance.transform.parent = attackTransform.transform;
+        }
+
+        currentAttack = 3;
+        isSkill = false;
+        SubAttackReset();
+    }
     
     // BURST
     private void Burst()
     {
+        Collider2D[] DetectObject = Physics2D.OverlapCircleAll(hitboxAttack.position, attackRadiusSnap, DamgeEnable);
+
+        List<GameObject> Enemy = new List<GameObject>();
+
+        foreach (Collider2D collider in DetectObject)
+        {
+            Enemy.Add(collider.gameObject);
+        }
+
+        Enemy.Sort((a, b) => Vector2.Distance(transform.position, a.transform.position).CompareTo(Vector2.Distance(transform.position, b.transform.position)));
+
+        if (Enemy.Count > 0)
+        {
+            GameObject nearestEnemy = Enemy[0];
+            
+            StartCoroutine(SpawnBurstObjects(nearestEnemy.transform.position, 10, 0.05f));
+            StartCoroutine(burstActiveEnabled(transform.position, nearestEnemy.transform.position));
+        }
+        else
+        {
+            StartCoroutine(SpawnBurstObjects(transform.position, 10, 0.05f));
+            StartCoroutine(burstActiveEnabled(transform.position, transform.position));
+        }
         
+        burstTimer = StartCoroutine(burstReset());
+        gm.DisablePlayer(gameObject, timeDisable);
     }
+    
+    private IEnumerator SpawnBurstObjects(Vector2 nearestEnemy, int count, float delay)
+    {
+        float rotationAngle = 0f;
+        float rotationIncrement = 36f;
+    
+        for (int i = 0; i < count; i++)
+        {
+            Quaternion rotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
+            rotationAngle += rotationIncrement;
+        
+            Vector2 randomOffset2D = Random.insideUnitCircle * maxOffsetMagnitude;
+            Vector3 randomOffset = new Vector3(randomOffset2D.x, randomOffset2D.y, 0f);
+        
+            Vector2 burstPositionTmp = nearestEnemy + (Vector2)(rotation * (Vector2)randomOffset);
+        
+            GameObject burstInstance = Instantiate(burstObject, burstPositionTmp, rotation);
+
+            ph.Parameters.setStat(ph.CurAttack / 2, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+
+            if (i == count - 1)
+            {
+                StartCoroutine(burstFinalSpawnObject(0.2f));
+            }
+            yield return new WaitForSeconds(delay);
+        }
+    }
+
     
     IEnumerator statBurstDelay()
     {
         yield return new WaitForSeconds(ps.BurstDelay);
 
         canBurst = true;
+    }
+    IEnumerator burstReset()
+    {
+        yield return new WaitForSeconds(skillCd);
+
+        canBurst = true;
+    }
+
+    IEnumerator burstActiveEnabled(Vector2 curPosition, Vector2 nearestEnemy)
+    {
+        yield return new WaitForSeconds(timeDisable);
+
+        canInput = true;
+        pc.CanInput = true;
+        pc.Rb.simulated = true;
+        
+        transform.position = nearestEnemy;
+        
+    }
+
+    IEnumerator burstFinalSpawnObject(float time)
+    {
+        yield return new WaitForSeconds(time);
+        
+        Collider2D[] DetectObject = Physics2D.OverlapCircleAll(hitboxAttack.position, attackRadiusSnap, DamgeEnable);
+
+        List<GameObject> Enemy = new List<GameObject>();
+
+        foreach (Collider2D collider in DetectObject)
+        {
+            Enemy.Add(collider.gameObject);
+        }
+
+        Vector2 offsetFinalBurst = new Vector2(0.0f, 10.0f);
+
+        Enemy.Sort((a, b) => Vector2.Distance(transform.position, a.transform.position).CompareTo(Vector2.Distance(transform.position, b.transform.position)));
+        
+        if (Enemy.Count > 0)
+        { 
+            GameObject nearestEnemy = Enemy[0];
+            
+            ph.Parameters.setStat(ph.CurAttack * 3, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+
+            Vector2 finalPosition = (Vector2)nearestEnemy.transform.position + offsetFinalBurst;
+            GameObject finalInstance = Instantiate(burstFinalObject, finalPosition, Quaternion.identity);
+            finalInstance.transform.parent = null;
+        }
+        else
+        {
+            ph.Parameters.setStat(ph.CurAttack * 4.5f, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+
+            
+            Vector2 finalPosition = (Vector2)transform.position + offsetFinalBurst;
+            GameObject finalInstance = Instantiate(burstFinalObject, finalPosition, Quaternion.identity);
+            finalInstance.transform.parent = null;
+        }
+        
+        
+        ps.DashLeft = ps.DashMultiple + ps.DashBonus;
+        StartCoroutine(burstSlash());
+        isBurst = false;
+    }
+
+    IEnumerator burstSlash()
+    {
+        yield return new WaitForSeconds(0.4f);
+        
+        Collider2D[] DetectObject = Physics2D.OverlapCircleAll(hitboxAttack.position, attackRadiusSnap, DamgeEnable);
+
+        List<GameObject> Enemy = new List<GameObject>();
+
+        foreach (Collider2D collider in DetectObject)
+        {
+            Enemy.Add(collider.gameObject);
+        }
+
+        Enemy.Sort((a, b) => Vector2.Distance(transform.position, a.transform.position).CompareTo(Vector2.Distance(transform.position, b.transform.position)));
+        
+        if (Enemy.Count > 0)
+        { 
+            GameObject nearestEnemy = Enemy[0];
+            
+            if (transform.position.x < Enemy[0].transform.position.x)
+            {
+                if (pc.FlipDirect != 1)
+                {
+                    pc.subFlipping(0.4f);
+                }
+            }
+            else if(transform.position.x > Enemy[0].transform.position.x)
+            {
+                if (pc.FlipDirect != -1)
+                {
+                    pc.subFlipping(0.4f);
+                }
+            }
+            
+            Vector3 direction = nearestEnemy.transform.position - transform.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            
+            Vector3 attackPositionTmp = attackTransform.transform.position + (rotation * offsetAttack); 
+            ph.Parameters.setStat(ph.CurAttack * 0.7f, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+            GameObject slashInstance = Instantiate(slashAttack, attackPositionTmp, rotation);
+            
+            float angleOffset = 15f;
+            
+            Quaternion leftRotation = Quaternion.AngleAxis(angle - angleOffset, Vector3.forward);
+            Vector3 leftAttackPosition = attackTransform.transform.position + (leftRotation * offsetAttack);
+            ph.Parameters.setStat(ph.CurAttack * 0.7f, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+            GameObject leftSkillInstance = Instantiate(slashAttack, leftAttackPosition, leftRotation);
+            
+            Quaternion rightRotation = Quaternion.AngleAxis(angle + angleOffset, Vector3.forward);
+            Vector3 rightAttackPosition = attackTransform.transform.position + (rightRotation * offsetAttack);
+            ph.Parameters.setStat(ph.CurAttack * 0.7f, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+            GameObject rightSkillInstance = Instantiate(slashAttack, rightAttackPosition, rightRotation);
+        }
+        else
+        {
+            Vector2 direction = pc.MoveSnap.normalized; 
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            
+            Vector3 attackPositionTmp = attackTransform.transform.position + (rotation * offsetAttack); 
+            ph.Parameters.setStat(ph.CurAttack * 0.7f, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+
+            GameObject skillInstance = Instantiate(slashAttack, attackPositionTmp, rotation);
+
+            float angleOffset = 15f;
+            
+            Quaternion leftRotation = Quaternion.AngleAxis(angle - angleOffset, Vector3.forward);
+            Vector3 leftAttackPosition = attackTransform.transform.position + (leftRotation * offsetAttack);
+            ph.Parameters.setStat(ph.CurAttack * 0.7f, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+            GameObject leftSkillInstance = Instantiate(slashAttack, leftAttackPosition, leftRotation);
+            
+            Quaternion rightRotation = Quaternion.AngleAxis(angle + angleOffset, Vector3.forward);
+            Vector3 rightAttackPosition = attackTransform.transform.position + (rightRotation * offsetAttack);
+            ph.Parameters.setStat(ph.CurAttack * 0.7f, ph.DmgBonus, ph.CurDefPierce, pc.Rb.transform.position, 0.0f, 0.0f);
+            GameObject rightSkillInstance = Instantiate(slashAttack, rightAttackPosition, rightRotation);
+        }
     }
 
     private bool floatToBool(float value)

@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     private Controller controller;
     private Rigidbody2D rb;
     private PlayerStat ps;
+
+    private bool canInput = true;
     
     [Header("Movement")]
     private bool isMove = false;
@@ -67,6 +69,7 @@ public class PlayerController : MonoBehaviour
 
     private void CheckInput()
     {
+        if (canInput == false) return;
         
         moveVector = controller.Player.Move.ReadValue<Vector2>();
         inputDirect = moveVector.x;
@@ -203,5 +206,11 @@ public class PlayerController : MonoBehaviour
     {
         get => flipDirect;
         set => flipDirect = value;
+    }
+
+    public bool CanInput
+    {
+        get => canInput;
+        set => canInput = value;
     }
 }

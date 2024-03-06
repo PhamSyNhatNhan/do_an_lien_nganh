@@ -31,6 +31,4 @@ public class Projectile : MonoBehaviour
     {
         rb.velocity = directionFromRotation * speed;
     }
-
-    
 }
