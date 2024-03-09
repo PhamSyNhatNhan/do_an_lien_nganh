@@ -46,22 +46,29 @@
     <Analyzer Include="E:\unity\2023.2.5f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Script\Enemy\Boss_Witch\BossWitchExplosion.cs" />
     <Compile Include="Assets\Script\Enemy\Dummy\DummyHealth.cs" />
+    <Compile Include="Assets\Script\Enemy\Boss_Witch\BossWitchBullet1.cs" />
     <Compile Include="Assets\Script\Projectile\Projectile.cs" />
     <Compile Include="Assets\Script\GameManager\DamageParameters.cs" />
+    <Compile Include="Assets\Script\Enemy\Default\EnemyCircleHitboxDefault.cs" />
+    <Compile Include="Assets\Script\Enemy\Boss_Witch\Boss_Witch.cs" />
     <Compile Include="Assets\Script\GameManager\CameraShake.cs" />
     <Compile Include="Assets\Script\Character\Default\PlayerController.cs" />
     <Compile Include="Assets\Script\Default\EnemyCircleHitboxDefaultTime.cs" />
     <Compile Include="Assets\Script\Character\SwordMaster\PlayerCombat.cs" />
+    <Compile Include="Assets\Script\Enemy\Default\EnemyCircleDefaultHitBox2.cs" />
     <Compile Include="Assets\Script\Default\CircleHitboxDefault_3.cs" />
     <Compile Include="Assets\Script\Enemy\Default\EnemyHealth.cs" />
     <Compile Include="Assets\Script\Character\Default\PlayerStat.cs" />
     <Compile Include="Assets\input\Controller.cs" />
     <Compile Include="Assets\Script\Enemy\Enemy_1\Enemy_1.cs" />
     <Compile Include="Assets\Script\Enemy\Dummy\Dummy.cs" />
+    <Compile Include="Assets\Script\Enemy\Boss_Witch\BossWitchTree.cs" />
     <Compile Include="Assets\Script\GameManager\GameManager_.cs" />
     <Compile Include="Assets\Script\Default\DestroyGameObject_Time.cs" />
     <Compile Include="Assets\Script\Character\Default\PlayerHealth.cs" />
+    <Compile Include="Assets\Script\Projectile\DestroyCustom.cs" />
     <Compile Include="Assets\Script\Default\CircleHitboxDefault.cs" />
     <Compile Include="Assets\Script\GameManager\DamageManager.cs" />
     <Compile Include="Assets\Script\Default\CircleHitboxDefault_2.cs" />

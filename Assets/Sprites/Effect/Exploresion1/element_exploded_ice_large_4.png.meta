@@ -1,0 +1,427 @@
+fileFormatVersion: 2
+guid: dc7e87913d2186948b597ad2592315e7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6976663786378896770
+    second: element_exploded_ice_large_4_0
+  - first:
+      213: 6787669996862024702
+    second: element_exploded_ice_large_4_1
+  - first:
+      213: 3714574298472984152
+    second: element_exploded_ice_large_4_2
+  - first:
+      213: -331486121616930399
+    second: element_exploded_ice_large_4_3
+  - first:
+      213: -7515165070682508590
+    second: element_exploded_ice_large_4_4
+  - first:
+      213: -980636728711168871
+    second: element_exploded_ice_large_4_5
+  - first:
+      213: 544433072934799152
+    second: element_exploded_ice_large_4_6
+  - first:
+      213: 1564711450066805553
+    second: element_exploded_ice_large_4_7
+  - first:
+      213: 7555194026630315946
+    second: element_exploded_ice_large_4_8
+  - first:
+      213: -3166053889983005169
+    second: element_exploded_ice_large_4_9
+  - first:
+      213: -1730609761789334823
+    second: element_exploded_ice_large_4_10
+  - first:
+      213: -6338325098156682133
+    second: element_exploded_ice_large_4_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: element_exploded_ice_large_4_0
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 35
+        width: 31
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7add8f0049ed2f90800000000000000
+      internalID: -6976663786378896770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: element_exploded_ice_large_4_1
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 60
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efba98746e5a23e50800000000000000
+      internalID: 6787669996862024702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: element_exploded_ice_large_4_2
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 9
+        width: 55
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85e2740d4a1dc8330800000000000000
+      internalID: 3714574298472984152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: element_exploded_ice_large_4_3
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 37
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a90d01f023566bf0800000000000000
+      internalID: -331486121616930399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: element_exploded_ice_large_4_4
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 46
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d2bb8d6f25c4b790800000000000000
+      internalID: -7515165070682508590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: element_exploded_ice_large_4_5
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 31
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99c387347141462f0800000000000000
+      internalID: -980636728711168871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: element_exploded_ice_large_4_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4
+        width: 9
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 037c04ccef63e8700800000000000000
+      internalID: 544433072934799152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: element_exploded_ice_large_4_7
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 18
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 133e73d06c8f6b510800000000000000
+      internalID: 1564711450066805553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: element_exploded_ice_large_4_8
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 0
+        width: 30
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aaff37620f079d860800000000000000
+      internalID: 7555194026630315946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: element_exploded_ice_large_4_9
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 23
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0eb1d3f2caef04d0800000000000000
+      internalID: -3166053889983005169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: element_exploded_ice_large_4_10
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 21
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9da29bf3793abf7e0800000000000000
+      internalID: -1730609761789334823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: element_exploded_ice_large_4_11
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 7
+        width: 27
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b649d65b7eeb908a0800000000000000
+      internalID: -6338325098156682133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      element_exploded_ice_large_4_0: -6976663786378896770
+      element_exploded_ice_large_4_1: 6787669996862024702
+      element_exploded_ice_large_4_10: -1730609761789334823
+      element_exploded_ice_large_4_11: -6338325098156682133
+      element_exploded_ice_large_4_2: 3714574298472984152
+      element_exploded_ice_large_4_3: -331486121616930399
+      element_exploded_ice_large_4_4: -7515165070682508590
+      element_exploded_ice_large_4_5: -980636728711168871
+      element_exploded_ice_large_4_6: 544433072934799152
+      element_exploded_ice_large_4_7: 1564711450066805553
+      element_exploded_ice_large_4_8: 7555194026630315946
+      element_exploded_ice_large_4_9: -3166053889983005169
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

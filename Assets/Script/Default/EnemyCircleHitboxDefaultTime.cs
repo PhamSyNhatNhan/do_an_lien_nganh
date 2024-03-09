@@ -21,6 +21,7 @@ public class CircleHitboxDefaultTime : MonoBehaviour
     {
         this.parameters = parameters;
         transform.localScale = new Vector3(scaleObject, scaleObject, 1.0f);
+        AtackRadius *= scaleObject;
     }
 
     void Update()
