@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class PlayerCombat : MonoBehaviour
@@ -12,6 +13,7 @@ public class PlayerCombat : MonoBehaviour
     private PlayerStat ps;
     private PlayerHealth ph;
     private GameManager_ gm;
+    private UiController uc;
 
     private bool canInput = true;
 
@@ -73,6 +75,7 @@ public class PlayerCombat : MonoBehaviour
         ps = GetComponent<PlayerStat>();
         ph = GetComponent<PlayerHealth>();
         gm = GameObject.Find("GameManager").GetComponent<GameManager_>();
+        uc = GameObject.Find("Canvas").GetComponent<UiController>();
         
         statAwake();
         StartCoroutine(statDashUpdate());
@@ -84,6 +87,7 @@ public class PlayerCombat : MonoBehaviour
         CheckInput();
         CheckValue();
         CheckDash();
+        uc.updateNumberDash(ps.DashLeft);
     }
 
     private void statAwake()
@@ -152,6 +156,18 @@ public class PlayerCombat : MonoBehaviour
             {
                 curMana = maxMana;
             }
+
+            if (Application.isMobilePlatform)
+            {
+                uc.MobileManaUi.GetComponent<Slider>().maxValue = maxMana; 
+                uc.MobileManaUi.GetComponent<Slider>().value = curMana;
+            }
+            else
+            {
+                uc.PCManaUi.GetComponent<Slider>().maxValue = maxMana; 
+                uc.PCManaUi.GetComponent<Slider>().value = curMana;
+            }
+            
             Skill();
         }
         
@@ -159,6 +175,16 @@ public class PlayerCombat : MonoBehaviour
         {
             isBurst = true;
             curMana = 0;
+            if (Application.isMobilePlatform)
+            {
+                uc.MobileManaUi.GetComponent<Slider>().maxValue = maxMana; 
+                uc.MobileManaUi.GetComponent<Slider>().value = curMana;
+            }
+            else
+            {
+                uc.PCManaUi.GetComponent<Slider>().maxValue = maxMana; 
+                uc.PCManaUi.GetComponent<Slider>().value = curMana;
+            }
             //Debug.Log("Burst");
             pc.Rb.velocity = new Vector2(0.0f, 0.0f);
             canInput = false;

@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManager_ : MonoBehaviour
 {
     private Transform originWorld;
-    
+    private UiController uc;
     
     [SerializeField] private List<GameObject> playerManager;
     [SerializeField] private List<GameObject> enemyManager;
@@ -14,46 +14,51 @@ public class GameManager_ : MonoBehaviour
     [Header("Level Manager")]
     [SerializeField] private List<GameObject> levelManager;
     private GameObject curLevel;
-    private int curLevelCount = 0;
+    private int curLevelCount = -1;
     
-    // Start is called before the first frame update
+    [Header("Player")]
+    private GameObject curPlayer;
+    
     void Start()
     {
         originWorld = transform;
-
-        /*
-        GameObject newlevel = Instantiate(levelManager[curLevelCount], originWorld);
-        newlevel.transform.parent = null;
-        curLevel = newlevel;
-        */
+        curPlayer = GameObject.Find("Player");
+        uc = GameObject.Find("Canvas").GetComponent<UiController>();
+        
+        nextLevel();
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        checkInput();
+        interactLevel();
     }
 
-    private void checkInput()
+    private void interactLevel()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && uc.StatusInteractUi)
         {
             nextLevel();
         }
     }
 
-    private void nextLevel()
+    
+    public void nextLevel()
     {
         if(curLevelCount < levelManager.Count - 1)
         {
             curLevelCount += 1;
-            Destroy(curLevel);
+            if(curLevel != null) Destroy(curLevel);
             GameObject newlevel = Instantiate(levelManager[curLevelCount], originWorld);
             newlevel.transform.parent = null;
             
             curLevel = newlevel;  
         }
         
+        if (curLevel == null || curLevel.GetComponent<Map>() == null || curLevel.GetComponent<Map>().PlayerPosition == null) {
+            Debug.LogError("Some objects are not properly initialized.");
+        }
+
+        curPlayer.transform.position = curLevel.GetComponent<Map>().PlayerPosition.position;
     }
 
     public void DisablePlayer(GameObject Player, float time)

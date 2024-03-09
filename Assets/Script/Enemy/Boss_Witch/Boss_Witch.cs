@@ -8,6 +8,7 @@ public class Boss_Witch : MonoBehaviour
     private EnemyHealth eh;
     private DamageManager dma;
     private EnemyStat es;
+    private CameraShake cs;
     
     [Header("NavMesh")]
     private Transform target;
@@ -54,6 +55,7 @@ public class Boss_Witch : MonoBehaviour
     {
         eh = GetComponent<EnemyHealth>();
         es = GetComponent<EnemyStat>();
+        cs = GameObject.Find("Virtual Camera").GetComponent<CameraShake>();
         
         target = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
@@ -171,6 +173,7 @@ public class Boss_Witch : MonoBehaviour
             GameObject newBullet1 = Instantiate(attack4Object, tmpTransform, Quaternion.identity);
             newBullet1.GetComponent<EnemyCircleHitboxDefault>().onInstantiate(eh.Parameters, 1.0f);
             
+            cs.ShakeCamera(6, 0.1f);
             yield return new WaitForSeconds(0.02f);
         }
         

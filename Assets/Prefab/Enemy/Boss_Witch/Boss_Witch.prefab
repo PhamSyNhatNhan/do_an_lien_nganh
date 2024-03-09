@@ -220,7 +220,7 @@ MonoBehaviour:
   defPierceBonus: 0
   critRate: 0
   critDamage: 0
-  hpBase: 3000
+  hpBase: 20000
   hpBonus: 0
   defBase: 100
   defBonus: 0

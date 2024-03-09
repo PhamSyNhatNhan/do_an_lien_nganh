@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
+using Slider = UnityEngine.UI.Slider;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -29,11 +31,13 @@ public class PlayerHealth : MonoBehaviour
 
     private PlayerStat ps;
     private PlayerController pc;
+    private UiController uc;
     
     void Start()
     {
         ps = GetComponent<PlayerStat>();
         pc = GetComponent<PlayerController>();
+        uc = GameObject.Find("Canvas").GetComponent<UiController>();
         parameters = new DamageParameters();
         getStats();
     }
@@ -60,6 +64,16 @@ public class PlayerHealth : MonoBehaviour
         curDefPierce = defPierce;
 
         curHp = hp;
+        if (Application.isMobilePlatform)
+        {
+            uc.MobileHpUi.GetComponent<Slider>().maxValue = hp;
+            uc.MobileHpUi.GetComponent<Slider>().value = curHp;
+        }
+        else
+        {
+            uc.PCManaUi.GetComponent<Slider>().maxValue = hp; 
+            uc.PCManaUi.GetComponent<Slider>().value = curHp;
+        }
         curDef = def;
         curDmgResistance = dmgResistance;
     }
@@ -82,6 +96,16 @@ public class PlayerHealth : MonoBehaviour
         curDefPierce = defPierce;
 
         curHp = hp - tmpHp;
+        if (Application.isMobilePlatform)
+        {
+            uc.MobileHpUi.GetComponent<Slider>().maxValue = hp;
+            uc.MobileHpUi.GetComponent<Slider>().value = curHp;
+        }
+        else
+        {
+            uc.PCManaUi.GetComponent<Slider>().maxValue = hp; 
+            uc.PCManaUi.GetComponent<Slider>().value = curHp;
+        }
         curDef = def;
         curDmgResistance = dmgResistance;
     }
@@ -130,13 +154,39 @@ public class PlayerHealth : MonoBehaviour
     public float Hp
     {
         get => hp;
-        set => hp = value;
+        set
+        { 
+            hp = value;
+            if (Application.isMobilePlatform)
+            {
+                uc.MobileHpUi.GetComponent<Slider>().maxValue = hp;
+                uc.MobileHpUi.GetComponent<Slider>().value = curHp;
+            }
+            else
+            {
+                uc.PCManaUi.GetComponent<Slider>().maxValue = hp; 
+                uc.PCManaUi.GetComponent<Slider>().value = curHp;
+            }
+        } 
     }
 
     public float CurHp
     {
         get => curHp;
-        set => curHp = value;
+        set
+        {
+            curHp = value;
+            if (Application.isMobilePlatform)
+            {
+                uc.MobileHpUi.GetComponent<Slider>().maxValue = hp;
+                uc.MobileHpUi.GetComponent<Slider>().value = curHp;
+            }
+            else
+            {
+                uc.PCManaUi.GetComponent<Slider>().maxValue = hp; 
+                uc.PCManaUi.GetComponent<Slider>().value = curHp;
+            }
+        } 
     }
 
     public float Def
