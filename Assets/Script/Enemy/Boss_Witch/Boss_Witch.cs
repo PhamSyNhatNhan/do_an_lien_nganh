@@ -157,7 +157,6 @@ public class Boss_Witch : MonoBehaviour
             }
 
             StartCoroutine(subWitchLightning(nearestEnemy.transform, 50));
-
         }
     }
 

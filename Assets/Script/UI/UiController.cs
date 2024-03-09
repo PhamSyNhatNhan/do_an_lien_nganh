@@ -26,6 +26,11 @@ public class UiController : MonoBehaviour
     [Header("interact")]
     [SerializeField] private GameObject interactUi;
     private bool statusInteractUi = false;
+
+    [Header("Normal")] 
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject settingMenu;
     
     [Header("Countdown")]
     [SerializeField] private GameObject countdownUi;
@@ -117,5 +122,23 @@ public class UiController : MonoBehaviour
     {
         get => statusInteractUi;
         set => statusInteractUi = value;
+    }
+
+    public GameObject PauseMenu
+    {
+        get => pauseMenu;
+        set => pauseMenu = value;
+    }
+
+    public GameObject MainMenu
+    {
+        get => mainMenu;
+        set => mainMenu = value;
+    }
+
+    public GameObject SettingMenu
+    {
+        get => settingMenu;
+        set => settingMenu = value;
     }
 }

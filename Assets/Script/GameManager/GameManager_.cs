@@ -24,20 +24,57 @@ public class GameManager_ : MonoBehaviour
         originWorld = transform;
         curPlayer = GameObject.Find("Player");
         uc = GameObject.Find("Canvas").GetComponent<UiController>();
-        
-        nextLevel();
+        Time.timeScale = 0.0f;
+        uc.MainMenu.SetActive(true);
     }
     
     void Update()
     {
-        interactLevel();
+        CheckInput();
     }
 
-    private void interactLevel()
+    public void mainGame()
+    {
+        uc.PauseMenu.SetActive(false);
+        uc.MainMenu.SetActive(true);
+    }
+
+    public void exitGame()
+    {
+        Application.Quit();
+    }
+    
+    public void newGame()
+    {
+        Time.timeScale = 1.0f;
+        uc.MainMenu.SetActive(false);
+
+        curLevelCount = -1;
+        nextLevel();
+    }
+
+    public void pauseGame()
+    {
+        Time.timeScale = 0.0f;
+        uc.PauseMenu.SetActive(true);
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1.0f;
+        uc.PauseMenu.SetActive(false);
+    }
+
+    private void CheckInput()
     {
         if (Input.GetKeyDown(KeyCode.F) && uc.StatusInteractUi)
         {
             nextLevel();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pauseGame();
         }
     }
 
