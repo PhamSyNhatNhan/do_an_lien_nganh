@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -30,7 +31,8 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private int enemyDirect = 1;
     private bool canFlip = true;
     [SerializeField] private bool isMove = false;
-    private Coroutine flipCoroutine; 
+    private Coroutine flipCoroutine;
+    [SerializeField] private GameObject healthBar;
     
     [Header("Attack")]
     private DamageParameters parameters;
@@ -59,6 +61,13 @@ public class EnemyHealth : MonoBehaviour
     {
         checkKnockBack();
         animationController();
+        updateHealthBar();
+    }
+
+    private void updateHealthBar()
+    {
+        healthBar.GetComponent<Slider>().maxValue = hp;
+        healthBar.GetComponent<Slider>().value = curHp;
     }
 
     private void getStats()
@@ -193,6 +202,7 @@ public class EnemyHealth : MonoBehaviour
         {
             enemyDirect *= -1;
             transform.Rotate(0.0f, 180.0f, 0.0f);
+            healthBar.transform.Rotate(0.0f, 180.0f, 0.0f);
         }
     }
     

@@ -259,9 +259,9 @@ MonoBehaviour:
   offsetAttack: {x: 0.15, y: 0, z: 0}
   skill1Object: {fileID: 2866893512792940194, guid: 291a9634d06a28242962b4301492d477, type: 3}
   skill2Object: {fileID: 1391568291207469436, guid: a8e6221f23a64384baafa324df1a3ba3, type: 3}
-  skillCd: 1
+  skillCd: 3
   manaGain: 12
-  maxMana: 12
+  maxMana: 30
   burstObject: {fileID: 4041466896100509090, guid: c4cf9c546a12c4a48a50e2dc77391a02, type: 3}
   burstCd: 1
   maxOffsetMagnitude: {x: 0.3, y: 0.3}
