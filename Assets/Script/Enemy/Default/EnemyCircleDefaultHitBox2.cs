@@ -12,6 +12,7 @@ public class EnemyCircleDefaultHitBox2 : MonoBehaviour
     private DamageParameters parameters;
     [SerializeField] private float time;
     
+    
     void Start()
     {
         StartCoroutine(destroyTime());

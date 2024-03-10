@@ -6,6 +6,7 @@ public class Level4 : MonoBehaviour
 {
     private Map map;
     private UiController uc;
+    private GameManager_ gm;
 
     [SerializeField] private GameObject boss;
     private GameObject curBoss;
@@ -20,6 +21,7 @@ public class Level4 : MonoBehaviour
         
         StartCoroutine(uc.countDownScene());
         StartCoroutine(starLevel());
+        gm.updateEnemy(new List<GameObject>() {boss});
     }
     
     IEnumerator starLevel()

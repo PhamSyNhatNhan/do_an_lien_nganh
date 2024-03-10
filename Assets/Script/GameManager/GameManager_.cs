@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,9 +8,12 @@ public class GameManager_ : MonoBehaviour
 {
     private Transform originWorld;
     private UiController uc;
+    private CinemachineVirtualCamera virtualCamera;
     
     [SerializeField] private List<GameObject> playerManager;
+    
     [SerializeField] private List<GameObject> enemyManager;
+    [SerializeField] private List<GameObject> enemyCurentManager = new List<GameObject>();
     
     [Header("Level Manager")]
     [SerializeField] private List<GameObject> levelManager;
@@ -26,6 +30,7 @@ public class GameManager_ : MonoBehaviour
         uc = GameObject.Find("Canvas").GetComponent<UiController>();
         Time.timeScale = 0.0f;
         uc.MainMenu.SetActive(true);
+        virtualCamera = GameObject.Find("Virtual Camera").GetComponent<CinemachineVirtualCamera>();
     }
     
     void Update()
@@ -33,6 +38,33 @@ public class GameManager_ : MonoBehaviour
         CheckInput();
     }
 
+    public void godmodeEnable()
+    {
+        curPlayer.GetComponent<PlayerHealth>().enterGodmode();
+    }
+
+    public void updateEnemy(List<GameObject> enemy)
+    {
+        enemyCurentManager = enemy;
+    }
+    
+    private void DestroyAllEnemies()
+    {
+        foreach (GameObject enemy in enemyCurentManager)
+        {
+            Destroy(enemy);
+        }
+        
+        enemyCurentManager.Clear();
+    }
+
+    public void winGame()
+    {
+        Destroy(curPlayer);
+        uc.WinMenu.SetActive(false);
+        uc.MainMenu.SetActive(true);
+    }
+    
     public void mainGame()
     {
         uc.PauseMenu.SetActive(false);
@@ -46,9 +78,21 @@ public class GameManager_ : MonoBehaviour
     
     public void newGame()
     {
+        DestroyAllEnemies();
         Time.timeScale = 1.0f;
         uc.MainMenu.SetActive(false);
+        if(curPlayer != null) Destroy(curPlayer);
 
+        curPlayer = Instantiate(playerManager[0], originWorld);
+        curPlayer.transform.parent = null;
+        curPlayer.name = "Player";
+        
+        if (virtualCamera != null && curPlayer != null)
+        {
+            virtualCamera.Follow = curPlayer.transform;
+            virtualCamera.LookAt = curPlayer.transform;
+        }
+        
         curLevelCount = -1;
         nextLevel();
     }
@@ -88,14 +132,15 @@ public class GameManager_ : MonoBehaviour
             GameObject newlevel = Instantiate(levelManager[curLevelCount], originWorld);
             newlevel.transform.parent = null;
             
-            curLevel = newlevel;  
-        }
-        
-        if (curLevel == null || curLevel.GetComponent<Map>() == null || curLevel.GetComponent<Map>().PlayerPosition == null) {
-            Debug.LogError("Some objects are not properly initialized.");
+            curLevel = newlevel;
+            curPlayer.transform.position = curLevel.GetComponent<Map>().PlayerPosition.position;  
         }
 
-        curPlayer.transform.position = curLevel.GetComponent<Map>().PlayerPosition.position;
+        if (curLevelCount == levelManager.Count)
+        {
+            Time.timeScale = 0.0f;
+            uc.WinMenu.SetActive(true);
+        }
     }
 
     public void DisablePlayer(GameObject Player, float time)

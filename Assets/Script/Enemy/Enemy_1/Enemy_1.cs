@@ -44,21 +44,22 @@ public class Enemy_1 : MonoBehaviour
             canAttack = false;
             subAttack = false;
         }
-        else if (isEnabledNav)
+        else if (isEnabledNav && target != null)
         {
-           agent.SetDestination(target.position);
-           eh.IsMove = true;
-           checkFlip();
+            agent.SetDestination(target.position);
+            eh.IsMove = true;
+            checkFlip();
 
-           if ((transform.position - target.position).magnitude <= attackRadius2)
-           {
-               canAttack = true;
-               agent.enabled = false;
-               eh.IsMove = false;
-               isEnabledNav = false;
-           }
+            if ((transform.position - target.position).magnitude <= attackRadius2)
+            {
+                canAttack = true;
+                agent.enabled = false;
+                eh.IsMove = false;
+                isEnabledNav = false;
+            }
         }
     }
+
 
     private void checkFlip()
     {

@@ -31,6 +31,7 @@ public class UiController : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject settingMenu;
+    [SerializeField] private GameObject winMenu;
     
     [Header("Countdown")]
     [SerializeField] private GameObject countdownUi;
@@ -53,7 +54,7 @@ public class UiController : MonoBehaviour
 
     public void setActiveInteract(bool active)
     {
-        statusInteractUi = active;
+        statusInteractUi = active; 
         interactUi.SetActive(active);
     }
 
@@ -140,5 +141,11 @@ public class UiController : MonoBehaviour
     {
         get => settingMenu;
         set => settingMenu = value;
+    }
+
+    public GameObject WinMenu
+    {
+        get => winMenu;
+        set => winMenu = value;
     }
 }

@@ -6,6 +6,7 @@ public class Level3 : MonoBehaviour
 {
     private Map map;
     private UiController uc;
+    private GameManager_ gm;
     
     [SerializeField] private List<GameObject> enemyManager = new List<GameObject>();
     private List<GameObject> curEnemyManager = new List<GameObject>();
@@ -18,9 +19,11 @@ public class Level3 : MonoBehaviour
     {
         map = GetComponent<Map>();
         uc = GameObject.Find("Canvas").GetComponent<UiController>();
+        gm = GameObject.Find("GameManager").GetComponent<GameManager_>();
         
         StartCoroutine(uc.countDownScene());
         StartCoroutine(starLevel());
+        gm.updateEnemy(curEnemyManager);
     }
 
     IEnumerator starLevel()
