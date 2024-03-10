@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      lb_obstacle_stone_MMR_1 #126423_0: -7931122960766542047
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

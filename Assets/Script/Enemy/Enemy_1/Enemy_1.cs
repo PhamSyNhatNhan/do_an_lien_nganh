@@ -44,21 +44,22 @@ public class Enemy_1 : MonoBehaviour
             canAttack = false;
             subAttack = false;
         }
-        else if (isEnabledNav)
+        else if (isEnabledNav && target != null)
         {
-           agent.SetDestination(target.position);
-           eh.IsMove = true;
-           checkFlip();
+            agent.SetDestination(target.position);
+            eh.IsMove = true;
+            checkFlip();
 
-           if ((transform.position - target.position).magnitude <= attackRadius2)
-           {
-               canAttack = true;
-               agent.enabled = false;
-               eh.IsMove = false;
-               isEnabledNav = false;
-           }
+            if ((transform.position - target.position).magnitude <= attackRadius2)
+            {
+                canAttack = true;
+                agent.enabled = false;
+                eh.IsMove = false;
+                isEnabledNav = false;
+            }
         }
     }
+
 
     private void checkFlip()
     {
@@ -74,8 +75,6 @@ public class Enemy_1 : MonoBehaviour
 
     private void Attack()
     {
-        StartCoroutine(RotateOverTime(gameObject.transform.GetChild(0).gameObject ,45f, 0.2f));
-        
         //Debug.Log("Enemy Attack");
         Collider2D[] DetectObject = Physics2D.OverlapCircleAll(transform.position, attackRadius, whatIsDamageEnabled);
 
@@ -106,7 +105,10 @@ public class Enemy_1 : MonoBehaviour
                     eh.subFlipping(0.4f);
                 }
             }
-
+            
+            StartCoroutine(RotateOverTime(gameObject.transform.GetChild(0).gameObject ,45f, 0.3f));
+            
+            
             if ((transform.position - target.position).magnitude <= attackRadius1)
             {
                 StartCoroutine(SpawnBullets(nearestEnemy.transform, bulletRow + 2, bulletColumn - 5));
@@ -115,29 +117,28 @@ public class Enemy_1 : MonoBehaviour
             {
                 StartCoroutine(SpawnBullets(nearestEnemy.transform));
             }
-            
         }
     }
     
     IEnumerator RotateOverTime(GameObject objectRotate, float targetAngle, float duration)
     {
-        float startAngle = objectRotate.transform.rotation.eulerAngles.z;
-        float currentAngle = startAngle;
-        float elapsedTime = 0f;
-        
+        float elapsedTime = 0;
+        Quaternion startRotation = objectRotate.transform.rotation;
+        Quaternion targetRotation = Quaternion.Euler(
+            objectRotate.transform.rotation.eulerAngles.x,
+            objectRotate.transform.rotation.eulerAngles.y,
+            objectRotate.transform.rotation.eulerAngles.z + targetAngle * -1.0f 
+        );
+    
         while (elapsedTime < duration)
         {
-            currentAngle = Mathf.Lerp(startAngle, startAngle + targetAngle, elapsedTime / duration);
-            
-            objectRotate.transform.rotation = Quaternion.Euler(0f, 0f, currentAngle);
-            
+            float t = elapsedTime / duration;
+            objectRotate.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
             elapsedTime += Time.deltaTime;
-            
             yield return null;
         }
-        
-        objectRotate.transform.rotation = Quaternion.Euler(0f, 0f, startAngle + targetAngle);
     }
+
 
     IEnumerator SpawnBullets(Transform nearestEnemy)
     {
@@ -172,7 +173,7 @@ public class Enemy_1 : MonoBehaviour
         
         agent.enabled = true;
         isEnabledNav = true;
-        StartCoroutine(RotateOverTime(gameObject.transform.GetChild(0).gameObject ,-45f, 0.2f));
+        StartCoroutine(RotateOverTime(gameObject.transform.GetChild(0).gameObject ,-45f, 0.3f));
         StartCoroutine(endAttack(4.0f));
     }
 
@@ -209,7 +210,7 @@ public class Enemy_1 : MonoBehaviour
         
         agent.enabled = true;
         isEnabledNav = true;
-        StartCoroutine(RotateOverTime(gameObject.transform.GetChild(0).gameObject ,-45f, 0.2f));
+        StartCoroutine(RotateOverTime(gameObject.transform.GetChild(0).gameObject ,-45f, 0.3f));
         StartCoroutine(endAttack(4.0f));
     }
 

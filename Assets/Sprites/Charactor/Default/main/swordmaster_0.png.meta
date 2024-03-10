@@ -527,7 +527,24 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      swordmaster_0_0: -8586258204495457685
+      swordmaster_0_1: -5863742884227187216
+      swordmaster_0_10: 9130273991649342636
+      swordmaster_0_11: -1593470362656641300
+      swordmaster_0_12: 201056648767010072
+      swordmaster_0_13: -8873540520113694398
+      swordmaster_0_14: 7285599439195101282
+      swordmaster_0_15: -8259297071261146753
+      swordmaster_0_16: -4893654141333211732
+      swordmaster_0_2: 3582903825039604806
+      swordmaster_0_3: 3843875930668221924
+      swordmaster_0_4: -3329994037224003114
+      swordmaster_0_5: -7609975312307693497
+      swordmaster_0_6: 4488189319466037794
+      swordmaster_0_7: 2278964382987724960
+      swordmaster_0_8: 8839797554894541265
+      swordmaster_0_9: 3489611233712493205
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

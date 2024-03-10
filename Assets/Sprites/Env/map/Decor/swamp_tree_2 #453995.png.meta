@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      swamp_tree_2 #453995_0: 287464600832489206
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

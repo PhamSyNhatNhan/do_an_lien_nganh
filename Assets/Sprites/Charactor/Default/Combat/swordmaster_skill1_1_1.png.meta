@@ -167,7 +167,9 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      swordmaster_skill1_1_1_0: 5124149440083387125
+      swordmaster_skill1_1_1_1: 4212681866367382215
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

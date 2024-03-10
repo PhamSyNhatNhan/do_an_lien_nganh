@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
+using Slider = UnityEngine.UI.Slider;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -26,16 +28,36 @@ public class PlayerHealth : MonoBehaviour
     [Header("Attack")]
     private DamageParameters parameters;
     
+    [Header("Dmg")] 
+    [SerializeField] private GameObject strikeEffect;
+    Dictionary<string, float> dmgCD = new Dictionary<string, float>();
+    private bool canDamage = true;
+    
 
     private PlayerStat ps;
     private PlayerController pc;
+    private UiController uc;
+    private DamageManager dma;
+    
+    
+    [SerializeField] private bool Godmode = false;
+    [SerializeField] private GameObject godModeElf;
+
+    public void enterGodmode()
+    {
+        Godmode = !Godmode;
+        godModeElf.SetActive(Godmode);
+    }
     
     void Start()
     {
         ps = GetComponent<PlayerStat>();
         pc = GetComponent<PlayerController>();
+        uc = GameObject.Find("Canvas").GetComponent<UiController>();
+        dma = GameObject.Find("GameManager").GetComponent<DamageManager>();
         parameters = new DamageParameters();
         getStats();
+        Debug.Log(hp + ", " + curHp);
     }
 
     void Update()
@@ -43,7 +65,7 @@ public class PlayerHealth : MonoBehaviour
         
     }
 
-    private void getStats()
+    public void getStats()
     {
         attack = ps.AttackBase + ps.AttackBase * ps.AttackBonus / 100;
         dmgBonus = ps.DmgBonus;
@@ -60,6 +82,16 @@ public class PlayerHealth : MonoBehaviour
         curDefPierce = defPierce;
 
         curHp = hp;
+        if (Application.isMobilePlatform)
+        {
+            uc.MobileHpUi.GetComponent<Slider>().maxValue = hp;
+            uc.MobileHpUi.GetComponent<Slider>().value = curHp;
+        }
+        else
+        {
+            uc.PCHpUi.GetComponent<Slider>().maxValue = hp; 
+            uc.PCHpUi.GetComponent<Slider>().value = curHp;
+        }
         curDef = def;
         curDmgResistance = dmgResistance;
     }
@@ -82,15 +114,89 @@ public class PlayerHealth : MonoBehaviour
         curDefPierce = defPierce;
 
         curHp = hp - tmpHp;
+        if (Application.isMobilePlatform)
+        {
+            uc.MobileHpUi.GetComponent<Slider>().maxValue = hp;
+            uc.MobileHpUi.GetComponent<Slider>().value = curHp;
+        }
+        else
+        {
+            uc.PCHpUi.GetComponent<Slider>().maxValue = hp; 
+            uc.PCHpUi.GetComponent<Slider>().value = curHp;
+        }
+        
         curDef = def;
         curDmgResistance = dmgResistance;
     }
 
     public void Damage(DamageParameters parameters)
     {
-        Debug.Log("Damage " + parameters.BaseDmg);
+        if(!canDamage) return;
+        
+        float baseDmg = parameters.BaseDmg;
+        float dmgBonus = parameters.DmgBonus;
+        float defPierce = parameters.DefPierce;
+        Vector2 playerDirect = parameters.PlayerDirect;
+        float knockBack = parameters.KnockBack;
+        float KnockBackTime = parameters.KnockBackTime1;
+
+
+        if (!dmgCD.ContainsKey(parameters.DmgName))
+        {
+            curHp -= dma.finalDamage(baseDmg, dmgBonus, defPierce, curDef, curDmgResistance);
+            if (Application.isMobilePlatform)
+            {
+                uc.MobileHpUi.GetComponent<Slider>().maxValue = hp;
+                uc.MobileHpUi.GetComponent<Slider>().value = curHp;
+            }
+            else
+            {
+                uc.PCHpUi.GetComponent<Slider>().maxValue = hp;
+                uc.PCHpUi.GetComponent<Slider>().value = curHp;
+                Debug.Log(hp + ", " + curHp);
+            }
+            Instantiate(strikeEffect, transform);
+
+            if (parameters.CdDamage != 0.0f)
+            {
+                dmgCD.Add(parameters.DmgName, parameters.CdDamage);
+                StartCoroutine(removeCdDamage(parameters.DmgName, parameters.CdDamage));
+            }
+            
+            if (playerDirect.x <= transform.position.x && pc.FlipDirect == 1)
+            {
+                pc.subFlipping();
+            }
+
+            if (playerDirect.x >= transform.position.x && pc.FlipDirect == -1)
+            {
+                pc.subFlipping();
+            }
+
+            if (curHp <= 0 && !Godmode)
+            {
+                Time.timeScale = 0.0f;
+                uc.WinMenu.SetActive(true);
+                Destroy(gameObject);
+            }
+            else if(curHp <= 0 && Godmode)
+            {
+                curHp = 1.0f;
+            }
+        
+            //KnockBack(playerDirect, knockBack, KnockBackTime);
+        }
+    }
+    
+    
+    IEnumerator removeCdDamage(string name, float time)
+    {
+        yield return new WaitForSeconds(time);
+        
+        dmgCD.Remove(name);
     }
 
+    
     public float Attack
     {
         get => attack;
@@ -130,13 +236,39 @@ public class PlayerHealth : MonoBehaviour
     public float Hp
     {
         get => hp;
-        set => hp = value;
+        set
+        { 
+            hp = value;
+            if (Application.isMobilePlatform)
+            {
+                uc.MobileHpUi.GetComponent<Slider>().maxValue = hp;
+                uc.MobileHpUi.GetComponent<Slider>().value = curHp;
+            }
+            else
+            {
+                uc.PCHpUi.GetComponent<Slider>().maxValue = hp; 
+                uc.PCHpUi.GetComponent<Slider>().value = curHp;
+            }
+        } 
     }
 
     public float CurHp
     {
         get => curHp;
-        set => curHp = value;
+        set
+        {
+            curHp = value;
+            if (Application.isMobilePlatform)
+            {
+                uc.MobileHpUi.GetComponent<Slider>().maxValue = hp;
+                uc.MobileHpUi.GetComponent<Slider>().value = curHp;
+            }
+            else
+            {
+                uc.PCHpUi.GetComponent<Slider>().maxValue = hp; 
+                uc.PCHpUi.GetComponent<Slider>().value = curHp;
+            }
+        } 
     }
 
     public float Def
@@ -185,5 +317,11 @@ public class PlayerHealth : MonoBehaviour
     {
         get => parameters;
         set => parameters = value;
+    }
+
+    public bool CanDamage
+    {
+        get => canDamage;
+        set => canDamage = value;
     }
 }

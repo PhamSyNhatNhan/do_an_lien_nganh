@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      npc_room_decoration_10 #468618_0: 3130037138166815717
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

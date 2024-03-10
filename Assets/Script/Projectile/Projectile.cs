@@ -31,4 +31,22 @@ public class Projectile : MonoBehaviour
     {
         rb.velocity = directionFromRotation * speed;
     }
+
+    public Rigidbody2D Rb
+    {
+        get => rb;
+        set => rb = value;
+    }
+
+    public float Speed
+    {
+        get => speed;
+        set => speed = value;
+    }
+
+    public Vector2 DirectionFromRotation
+    {
+        get => directionFromRotation;
+        set => directionFromRotation = value;
+    }
 }

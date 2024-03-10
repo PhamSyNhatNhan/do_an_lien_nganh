@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      multi_room_skin_3_tree_left_0_0: 2850823786628495035
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -25,6 +25,23 @@ public class DamageParameters
         this.dmgName = dmgName;
         this.cdDamage = cdDamage;
     }
+    
+    public DamageParameters Clone()
+    {
+        DamageParameters clonedParameters = new DamageParameters();
+        
+        clonedParameters.baseDmg = this.baseDmg;
+        clonedParameters.dmgBonus = this.dmgBonus;
+        clonedParameters.defPierce = this.defPierce;
+        clonedParameters.playerDirect = this.playerDirect;
+        clonedParameters.knockBack = this.knockBack;
+        clonedParameters.KnockBackTime = this.KnockBackTime;
+        clonedParameters.dmgName = this.dmgName;
+        clonedParameters.cdDamage = this.cdDamage;
+        
+        return clonedParameters;
+    }
+
 
     public DamageParameters()
     {

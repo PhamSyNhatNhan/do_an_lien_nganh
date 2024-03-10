@@ -27,13 +27,15 @@ public class EnemyHealth : MonoBehaviour
     Dictionary<string, float> dmgCD = new Dictionary<string, float>();
 
     [Header("Controller")]
-    private int enemyDirect = 1;
+    [SerializeField] private int enemyDirect = 1;
     private bool canFlip = true;
     [SerializeField] private bool isMove = false;
     private Coroutine flipCoroutine; 
     
     [Header("Attack")]
     private DamageParameters parameters;
+    [SerializeField] private bool canDamage = true;
+    [SerializeField] private bool canKnockBack = true;
 
     [SerializeField] private GameObject deathObject;
 
@@ -102,6 +104,8 @@ public class EnemyHealth : MonoBehaviour
 
     public void Damage(DamageParameters parameters)
     {
+        if (!canDamage) return;
+        
         float baseDmg = parameters.BaseDmg;
         float dmgBonus = parameters.DmgBonus;
         float defPierce = parameters.DefPierce;
@@ -138,6 +142,7 @@ public class EnemyHealth : MonoBehaviour
                 Destroy(gameObject);
             }
         
+            if(!canKnockBack) return;
             KnockBack(playerDirect, knockBack, KnockBackTime);
         }
     }
@@ -299,5 +304,17 @@ public class EnemyHealth : MonoBehaviour
     {
         get => parameters;
         set => parameters = value;
+    }
+
+    public GameObject DeathObject
+    {
+        get => deathObject;
+        set => deathObject = value;
+    }
+
+    public float Hp
+    {
+        get => hp;
+        set => hp = value;
     }
 }

@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      lbscene_03 #118383_0: 1287056610595431040
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

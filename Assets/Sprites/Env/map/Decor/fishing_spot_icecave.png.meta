@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      fishing_spot_icecave_0: 2679839298804248758
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
